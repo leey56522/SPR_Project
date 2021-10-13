@@ -4,10 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>SPR Project</title>
 </head>
 <body>
-    <script src="index.js">
+    <h1>Can You Beat a Computer in 5 Rounds?</h1>
+    <div>
+        <button id="Rock">Rock</button>
+        <button id="Paper">Paper</button>
+        <button id="Scissors">Scissors</button>
+    </div>
+    <br>
+    <hr>
+    <div class="pick">
+        <h2 id="player">Player picks: </h2>
+        <h2 id="computer">Computer Picks: </h2>
+        <br>
+        <h3 id="roundResult"> </h3>
+    </div>
+    <br>
+    <hr>
+    <div class="attempts">
+        <h2 id="playerScore">Player Score: <span id="playerOutput"></span></h2>
+        <h2 id="computerScore">Computer Score: <span id="computerOutput"></span></h2>
+        <br>
+        <h3 id="attempts">Number of attempts left: <span id="roundsLeft"></span></h3>
+    </div>
+
+    <script src="./index.js">
     </script>
 </body>
 </html>

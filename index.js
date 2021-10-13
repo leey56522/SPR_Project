@@ -1,3 +1,20 @@
+const body = document.querySelector('body');
+const rock = document.querySelector('#Rock');
+const paper = document.querySelector('#Paper');
+const scissors = document.querySelector('#Scissors');
+const playerPick = document.getElementById('player');
+const computerPick = document.getElementById('computer');
+const playerOutput = document.getElementById('playerOutput');
+const computerOutput = document.getElementById('computerOutput');
+const roundsLeft = document.getElementById('roundsLeft');
+const roundResult = document.getElementById('roundResult');
+
+var x = 0;
+var y = 5;
+playerOutput.innerHTML = x;
+computerOutput.innerHTML = x;
+roundsLeft.innerHTML = y;
+
 const computerPlay = () => {
     let computerHand = ""
     let randomNum = Math.floor(Math.random()*3);
@@ -8,59 +25,63 @@ const computerPlay = () => {
     } else {
         computerHand = 'Scissors'
     }
-    return computerHand
+    return computerHand;
 };
 
+const playTime = (human) => {
+    let humanHand = human;
+    let compHand = computerPlay();
 
-const playTime = (computer, human) => {
-    let humanHand = human[0].toUpperCase() + human.slice(1).toLowerCase();
-    if (humanHand !== 'Rock' && humanHand !== 'Paper' && humanHand !== 'Scissors') {
-        return window.prompt('Pls pick between Rock, Paper, and Scissors')
-    }
-    let compHand = computer();
+    playerPick.textContent = `Player picks: ${humanHand}`;
+    computerPick.textContent = `Computer picks: ${compHand}`;
 
     if (humanHand === compHand) {
-        return 'Tie';
+        roundsLeft.innerHTML = --y;
+        roundResult.innerHTML = 'Tie';
     } else if (humanHand === 'Rock' && compHand === 'Paper') {
-        return 'Paper beats Rock! Computer wins';
+        computerOutput.innerHTML = ++x;
+        roundsLeft.innerHTML = --y;
+        roundResult.innerHTML = 'Computer wins this round';
     } else if (humanHand === 'Rock' && compHand === 'Scissors') {
-        return 'Rock beats Scissors! Player wins';
+        playerOutput.innerHTML = ++x;
+        roundsLeft.innerHTML = --y;
+        roundResult.innerHTML = 'Player wins this round';
     } else if (humanHand === 'Paper' && compHand === 'Scissors') {
-        return 'Scissors beats Paper! Computer wins';
+        computerOutput.innerHTML = ++x;
+        roundsLeft.innerHTML = --y;
+        roundResult.innerHTML = 'Computer wins this round';
     } else if (humanHand === 'Paper' && compHand === 'Rock') {
-        return 'Paper beats Rock! Player wins';
+        playerOutput.innerHTML = ++x;
+        roundsLeft.innerHTML = --y;
+        roundResult.innerHTML = 'Player wins this round';
     } else if (humanHand === 'Scissors' && compHand === 'Rock') {
-        return 'Rock beats Scissors! Computer wins';
+        computerOutput.innerHTML = ++x;
+        roundsLeft.innerHTML = --y;
+        roundResult.innerHTML = 'Computer wins this round';
     } else if (humanHand === 'Scissors' && compHand === 'Paper') {
-        return 'Scissors beats Paper! Player wins';
+        playerOutput.innerHTML = ++x;
+        roundsLeft.innerHTML = --y;
+        roundResult.innerHTML = 'Player wins this round';
+    }
+
+    if (roundsLeft.innerHTML < 0 && playerOutput.innerHTML > computerOutput.innerHTML) {
+        alert('Congratulation! You beat the computer!!')
+        location.reload();
+    } else if (roundsLeft.innerHTML < 0 && playerOutput.innerHTML < computerOutput.innerHTML) {
+        alert('Oh no, the computer wins!')
+        location.reload();
+    } else if (roundsLeft.innerHTML < 0 && playerOutput.innerHTML === computerOutput.innerHTML) {
+        alert('Tie! Try again')
+        location.reload();
     }
 };
 
-
-const game = () => {
-    let playerScore = 0;
-    let compScore = 0;
-
-    for (let i = 1; i <= 5; i++) {
-        let playerChoice = window.prompt('Pls pick between Rock, Paper, and Scissors') 
-        let result = playTime(computerPlay, playerChoice);
-        if (result.includes('Player wins')) {
-            playerScore++
-        } else if (result.includes('Computer wins')) {
-            compScore++
-        } else if (result.includes('Tie')) {
-            playerScore++
-            compScore++
-        }
-    }
-
-    if (playerScore > compScore) {
-        return `Player wins! Your score is ${playerScore} and the computer score is ${compScore}`;
-    } else if (compScore > playerScore) {
-        return `Computer wins! Your score is ${playerScore} and the computer score is ${compScore}`;
-    } else {
-        return `It's a Tie! Your score is ${playerScore} and the computer score is ${compScore}`;
-    }
-}
-
-console.log(game())
+rock.addEventListener('click', function() {
+    playTime('Rock');
+});
+paper.addEventListener('click', function() {
+    playTime('Paper');
+});
+scissors.addEventListener('click', function() {
+    playTime('Scissors');
+});
